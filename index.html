@@ -16,7 +16,6 @@
 <br><u>Arch Linux (KDE/XFCE) Instructions for UEFI Systems | 64bit</u></div>
 
 <br>These are simple instructions on how to install Arch Linux on <b>UEFI</b> based systems. Please keep in mind these are just instructions, anything that would happen to your machine while following these is not my responsibility, this has been of course tested on Oracle VM VirtualBox. This would cover the installation of Arch Linux with installing KDE Plasma with the softwares that are necessary (soon i3 with the softwares of my choice and the admin), if you want to install all KDE applications as well I have included it in a notice. And give the External Links a look that are at the end of this page to view other places as well!
-<br><br><b>All below are UEFI based, therefore if you’re using Oracle VM VirtualBox, after creating the VM and before running it, enable UEFI from the VM’s settings by going to the settings of the VM, then System, after that click on ‘Enable EFI (Special OSes only)’. If you use another VM, <a href="https://www.google.com/" target="_blank">Google</a> how to do so.</b>
 <br><br>Before continuing, visit <a href="https://archlinux.org/download/" target="_blank">this link</a> to install the ISO from a server, it's usually named like "archlinux-2021.03.01-x86_64.iso". Then prepare an installation medium by checking <a href="https://wiki.archlinux.org/index.php/Installation_guide#Prepare_an_installation_medium" target="_blank">here</a>. After doing that boot the live environment by checking <a href="https://wiki.archlinux.org/index.php/Installation_guide#Boot_the_live_environment target="_blank">here</a>. And then, when you do these above 3 things, and when you're in the live environment, feel free to continue checking the steps:
     
 <br><br><b>Notices: 
@@ -29,33 +28,34 @@
 <br><span class="code">- ls /sys/firmware/efi/efivars</span>
 
 <br><br>B. Connect to wifi
-<Br><span class="code"> iwctl  </span>
-<br><span class="code"> device list </span>
-<br><span class="code"> station {device} scan </span> | {device} = your wifi device from previous command
-<br><span class="code"> station {device} connect {SSID} </span>
-<br><span class="code"> {ctrl + c} </span> |exits iwctl tool
+<br><Br><span class="code"> iwctl  </span>
+<br><br><span class="code"> device list </span>
+<br><br><span class="code"> station {device} scan </span> | {device} = your wifi device from previous command
+<br><br><span class="code"> station {device} connect {SSID} </span>
+<br><br><span class="code"> {ctrl + c} </span> |exits iwctl tool
 
-<br><br>C. Update system clock by typing these:
-<br><span class="code">- timedatectl set-ntp true
-<br>- timedatectl status</span> Now let's list the timezones available to see if yours is here:
-<br><span class="code">- timedatectl list-timezones</span> Then let's set your timezone:
-<br><span class="code">- timedatectl set-timezone <i>Zone/SubZone</i></span> instead of "Zone/SubZone" insert one from the command that we did before, for example:
-<br><span class="code">timedatectl set-timezone Canada/Eastern</span> Now let's check if it worked:
-<br><span class="code">- timedatectl status</span> if it didn't work please do it again.
+<br><br>C. Update system clock
+<br><span class="code"> timedatectl set-ntp true </span>
+<br> timedatectl status </span>
+<br><span class="code"> timedatectl list-timezones</span>| lists timezones to find yours
+<br><span class="code"> timedatectl set-timezone Europe/London </span>| change "Europe/London" to your timezone if aplicable
+<br><span class="code"> timedatectl set-timezone Canada/Eastern</span> Now let's check if it worked:
+<br><span class="code"> timedatectl status</span>| if it didn't work, try again
 
-<br><br>D. type this first (if you want to use fdisk, check <a href="https://wiki.archlinux.org/index.php/Fdisk#Create_a_partition_table_and_partitions" target="_blank">here</a>):
-<br><span class="code"># cfdisk</span>
-<br> Delete all of your current partitions until it's 1 partition that has your full storage (by choosing each partition and then do "Delete" that's at the bottom), then create 2 partitions (by most probably choosing "New" that's at the bottom when on an empty non-labeled partition storage without any type):
-<br>- With size: 260MiB
-<br>And with the type: EFI system partition
-<br> Then the first partition should be created as the EFI system partition type, now go back to the second one which has the rest of your storage (not the EFI system, the one that has no type), and create ("New" at the bottom) another one:
-<br>- With Size: rest.
-<br>And with the type: Linux x86-64 root
-<br><br> After creating the 2 partitions with their correct sizes and the type, write the 2 partitions by first choosing the first one then there's "Write" at the bottom of the cfdisk place, just like you did with type and creating the partitions, choose the first partition then click "Write" and then type "yes", do this for the second partition as well. And then when you write both of the partitions, do "Quit" and continue:
+<br><br>D. Make your partitions
+<br><span class="code"> fdisk -l </span>
+<br><span class="code"> cfdisk {drive}</span>|where {drive} is the path to the drive you are installing on
+<br> Delete all partitions
+<br> click "new" when on "Free space"
+<br><span class="code"> 260M </span>| When prompted on size
+<br>- Set partition type as "EFI system" 
+<br>- Optional - create new partition type: swap - recommended 4gb for 4gb ram and under
+<br>- Create new partition using the rest of the space with type : Linux x86-64 root
+<br>- Click "write" to write the partitions to the disk and when prompted type "yes"
+<br><br>
 
-<br><br>E. format partitions by typing separately (do cfdisk back to check if sda1 is EFI and if sda2 is the root partition! If it isn't rewrite it accordingly):
-<br><span class="code">- mkfs.ext4 /dev/sda2</span> for root partition
-<br><span class="code">- mkfs.fat -F32 /dev/sda1</span> for EFI system partition
+<br><br>format partitions
+
 
 <br><br>F. Mount the partitions by typing (do cfdisk back to check if sda1 is EFI and if sda2 is the root partition! If it isn't rewrite it accordingly):
 <br><span class="code">- mount /dev/sda2 /mnt</span> for root partition
