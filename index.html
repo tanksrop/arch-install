@@ -28,15 +28,15 @@
 <br><span class="code">- ls /sys/firmware/efi/efivars</span>
 
 <br><br>B. Connect to wifi
-<br><Br><span class="code"> iwctl  </span>
-<br><br><span class="code"> device list </span>
-<br><br><span class="code"> station {device} scan </span> | {device} = your wifi device from previous command
-<br><br><span class="code"> station {device} connect {SSID} </span>
-<br><br><span class="code"> {ctrl + c} </span> |exits iwctl tool
+<Br><span class="code"> iwctl  </span>
+<br><span class="code"> device list </span>
+<br><span class="code"> station {device} scan </span> | {device} = your wifi device from previous command
+<br><span class="code"> station {device} connect {SSID} </span>
+<br><span class="code"> {ctrl + c} </span> |exits iwctl tool
 
 <br><br>C. Update system clock
 <br><span class="code"> timedatectl set-ntp true </span>
-<br> timedatectl status </span>
+<br><span class="code"> timedatectl status </span>
 <br><span class="code"> timedatectl list-timezones</span>| lists timezones to find yours
 <br><span class="code"> timedatectl set-timezone Europe/London </span>| change "Europe/London" to your timezone if aplicable
 <br><span class="code"> timedatectl set-timezone Canada/Eastern</span> Now let's check if it worked:
@@ -51,7 +51,6 @@
 <br>- Set partition type as "EFI system" 
 <br>- Create new partition using the rest of the space with type : Linux x86-64 root
 <br>- Click "write" to write the partitions to the disk and when prompted type "yes"
-<br><br>
 
 <br><br>E. format partitions
 <br><span class="code"> fdisk -l </span>|
@@ -62,8 +61,6 @@
 <br><span class="code"> mount {path to Linux x86-64 root partition} </span>
 <br><span class="code"> mkdir /efi </span>
 <br><span class="code"> mount {path to efi partition} /efi </span>
-  
-  
 
 <br><br>G. install necessary packages
 <br> replace intel-ucode with amd_ucode for amd systems
@@ -75,46 +72,37 @@
 <br><span class="code"> ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime </span>|replace Europe/London with what you put in earlier for timedatectl
 <br><span class="code"> hwclock --systohc </span>
 
-
 <br><br>I. Apply localization 
 <br><span class="code"> nano /etc/locale.gen</span>
-<br>Then uncomment "en_US.UTF-8 UTF-8" OR the language of your choice.   
-<br>2. save the file and then run: <br><span class="code">locale-gen</span>
-<br>3. and then run: <br><span class="code">nano /etc/locale.conf</span>
-<br>4. and type in the file: LANG=en_US.UTF-8 | replace "en_US.UTF-8" with the language you uncommented before.
+<br>Then uncomment (remove #) "en_GB,UTF-8" or whatever is relevent to you  
+<br><span class="code"> ctrl + x </span> then <span class="code"> y </span> to save and exit nano
+<br><span class="code"> nano /etc/locale.conf </span>|type LANG=en_GB,UTF-8 or whatever is relevent to you
 
-<br><br>J. Now to setup the hostname file, 1. type: <br><span class="code"> nano /etc/hostname</span>
-<br>Then type a host name of your choice in the file.
-<br>2. Then run this: <br><span class="code">nano /etc/hosts</span>
-<br>And type these in the file (respect the new lines! If a line is in a separate line, don't type it next to each other):
-<br>127.0.0.1 localhost
-<br>: :1 localhost
-<br>127.0.1.1 myhostname.localdomain myhostname | replace "myhostname" with the hostname you put in the /etc/hostname file.
+<br><br>J. set up hostname
+<br><span class="code"> nano /etc/hostname </span>|type a hostname then save and quit
+<br><span class="code"> nano /etc/hosts </span> type the following 3 lines in
+<br><span class="code"> 127.0.0.1 localhost </span>
+<br><span class="code"> : :1 localhost </span>
+<br><span class="code"> 127.0.1.1 {hostname}.localdomain {hostname}</span>| replace {hostname} with the hostname you set
 
-<br><br>K. Let's setup the root password by typing:
-<br><span class="code">- passwd</span>
-<br>And insert a password.
+<br><br>K. set root password 
+<br><span class="code"> passwd </span>| then put in password
 
-<br><br>L. Let's setup the bootloader by running these separately: 
-<br><span class="code">- grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
-<br>grub-mkconfig -o /boot/grub/grub.cfg</span>
+<br><br>L. set up the bootloader  
+<br><span class="code"> grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB </span>
+<br><span class="code"> grub-mkconfig -o /boot/grub/grub.cfg </span>
 
-<br><br>M. exit chroot by typing "exit" and now restart by typing "reboot" OR if you're in a VM type "shutdown now" and go remove the Arch Linux image from the VM settings by going to the settings of your VM, then storage, then the one under "Controller: IDE", under the other tab in "Attributes" next to Optical Drive there's a CD icon, click on that and change from the ISO to your Host Drive.
+<br> exit chroot with <span class="code">exit</span> then restart with <span class="code">reboot</span> then unplug usb before it boots again
 
-<br><br>N. Add non-root user:
-<br><span class="code">- useradd -m user</span> | replace "user" with a user name.
+<br>M. Add non-root user
+<br><span class="code"> useradd -m {username} </span>
+<br><span class="code"> passwd {username} </span>
+<br><span class="code"> usermod -aG wheel,audio,video,optical,storage {username} </span>
+	
+	
+<br><br>N. give super user privileges to all the users in the wheel group
+<br><span class="code"> EDITOR=nano visudo </span>|uncomment the linethat says <span class="code">%wheel ALL=(ALL) ALL</span> then save and quit
 
-<br><br>O. Set a password for that user:
-<br><span class="code">- passwd user</span> | replace "user" with the user name you chose above to create a user with.
-
-<br><br>P. Add the user to the required groups:
-<br><span class="code">- usermod -aG wheel,audio,video,optical,storage user</span> | replace "user" that's after "storage" by the user name you created above.
-
-<br><br>Q. Giving super user privileges to all the users in the wheel group (currently the only user we made):
-<br>1. Run this:
-<br><span class="code">- EDITOR=nano visudo</span>
-<br>2. Uncomment (remove the #) the line that says:
-<br># %wheel ALL=(ALL) ALL
 <br>3. Exit root account by typing "exit" and then log in to your user.
 
 <br><br>R. Installing plasma:
