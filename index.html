@@ -21,12 +21,13 @@
 
 
 <br><br>A. Verify boot mode:
-<br><span class="code">- ls /sys/firmware/efi/efivars</span>
+<br><span class="code"> ls /sys/firmware/efi/efivars</span>
 
 <br><br>B. Connect to wifi
 <Br><span class="code"> iwctl  </span>
 <br><br><span class="code"> device list </span>
 <br><br><span class="code"> station {device} scan </span> | {device} = your wifi device from previous command
+<br><br><span class="code"> station {device} get-networks
 <br><br><span class="code"> station {device} connect {SSID} </span>
 <br><br><span class="code"> {ctrl + c} </span> |exits iwctl tool
 
@@ -35,7 +36,6 @@
 <br><br><span class="code"> timedatectl status </span>
 <br><br><span class="code"> timedatectl list-timezones</span>| lists timezones to find yours
 <br><br><span class="code"> timedatectl set-timezone Europe/London </span>| change "Europe/London" to your timezone if aplicable
-<br><br><span class="code"> timedatectl set-timezone Canada/Eastern</span> Now let's check if it worked:
 <br><br><span class="code"> timedatectl status</span>| if it didn't work, try again
 
 <br><br>D. Make your partitions
@@ -54,7 +54,7 @@
 <br><br><span class="code"> mkfs.fat -F32 /dev/{path for efi partition} </span>
 
 <br><br>F. mount partitions
-<br><span class="code"> mount {path to Linux x86-64 root partition} </span>
+<br><span class="code"> mount {path to Linux x86-64 root partition} /mnt</span>
 <br><br><span class="code"> mkdir /efi </span>
 <br><br><span class="code"> mount {path to efi partition} /efi </span>
 
