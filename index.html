@@ -25,75 +25,75 @@
 
 <br><br>B. Connect to wifi
 <Br><span class="code"> iwctl  </span>
-<br><span class="code"> device list </span>
-<br><span class="code"> station {device} scan </span> | {device} = your wifi device from previous command
-<br><span class="code"> station {device} connect {SSID} </span>
-<br><span class="code"> {ctrl + c} </span> |exits iwctl tool
+<br><br><span class="code"> device list </span>
+<br><br><span class="code"> station {device} scan </span> | {device} = your wifi device from previous command
+<br><br><span class="code"> station {device} connect {SSID} </span>
+<br><br><span class="code"> {ctrl + c} </span> |exits iwctl tool
 
 <br><br>C. Update system clock
 <br><span class="code"> timedatectl set-ntp true </span>
-<br><span class="code"> timedatectl status </span>
-<br><span class="code"> timedatectl list-timezones</span>| lists timezones to find yours
-<br><span class="code"> timedatectl set-timezone Europe/London </span>| change "Europe/London" to your timezone if aplicable
-<br><span class="code"> timedatectl set-timezone Canada/Eastern</span> Now let's check if it worked:
-<br><span class="code"> timedatectl status</span>| if it didn't work, try again
+<br><br><span class="code"> timedatectl status </span>
+<br><br><span class="code"> timedatectl list-timezones</span>| lists timezones to find yours
+<br><br><span class="code"> timedatectl set-timezone Europe/London </span>| change "Europe/London" to your timezone if aplicable
+<br><br><span class="code"> timedatectl set-timezone Canada/Eastern</span> Now let's check if it worked:
+<br><br><span class="code"> timedatectl status</span>| if it didn't work, try again
 
 <br><br>D. Make your partitions
-<br><span class="code"> fdisk -l </span>
-<br><span class="code"> cfdisk {drive}</span>|where {drive} is the path to the drive you are installing on
-<br> Delete all partitions
-<br> click "new" when on "Free space"
-<br><span class="code"> 260M </span>| When prompted on size
-<br>- Set partition type as "EFI system" 
-<br>- Create new partition using the rest of the space with type : Linux x86-64 root
-<br>- Click "write" to write the partitions to the disk and when prompted type "yes"
+<br><br><span class="code"> fdisk -l </span>
+<br><br><span class="code"> cfdisk {drive}</span>|where {drive} is the path to the drive you are installing on
+<br><br> Delete all partitions
+<br><br> click "new" when on "Free space"
+<br><br><span class="code"> 260M </span>| When prompted on size
+<br><br>- Set partition type as "EFI system" 
+<br><br>- Create new partition using the rest of the space with type : Linux x86-64 root
+<br><br>- Click "write" to write the partitions to the disk and when prompted type "yes"
 
 <br><br>E. format partitions
 <br><span class="code"> fdisk -l </span>|
-<br><span class="code"> mkfs.ext4 {path to Linux x86-64 root partition} </span>
-<br><span class="code"> mkfs.fat -F32 /dev/{path for efi partition} </span>
+<br><br><span class="code"> mkfs.ext4 {path to Linux x86-64 root partition} </span>
+<br><br><span class="code"> mkfs.fat -F32 /dev/{path for efi partition} </span>
 
 <br><br>F. mount partitions
 <br><span class="code"> mount {path to Linux x86-64 root partition} </span>
-<br><span class="code"> mkdir /efi </span>
-<br><span class="code"> mount {path to efi partition} /efi </span>
+<br><br><span class="code"> mkdir /efi </span>
+<br><br><span class="code"> mount {path to efi partition} /efi </span>
 
 <br><br>G. install necessary packages
 <br> replace intel-ucode with amd_ucode for amd systems
-<br><span class="code"> pacstrap /mnt base base-devel linux-zen linux-firmware nano intel-ucode grub efibootmgr networkmanager </span>
+<br><br><span class="code"> pacstrap /mnt base base-devel linux-zen linux-firmware nano intel-ucode grub efibootmgr networkmanager </span>
 
 <br><br>H. Configure the packages
-<br><span class="code"> genfstab -U /mnt >> /mnt/etc/fstab </span>
-<br><span class="code"> arch-chroot /mnt</span>
-<br><span class="code"> ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime </span>|replace Europe/London with what you put in earlier for timedatectl
-<br><span class="code"> hwclock --systohc </span>
+<br><br><span class="code"> genfstab -U /mnt >> /mnt/etc/fstab </span>
+<br><br><span class="code"> arch-chroot /mnt</span>
+<br><br><span class="code"> ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime </span>|replace Europe/London with what you put in earlier for timedatectl
+<br><br><span class="code"> hwclock --systohc </span>
 
 <br><br>I. Apply localization 
 <br><span class="code"> nano /etc/locale.gen</span>
-<br>Then uncomment (remove #) "en_GB,UTF-8" or whatever is relevent to you  
-<br><span class="code"> ctrl + x </span> then <span class="code"> y </span> to save and exit nano
-<br><span class="code"> nano /etc/locale.conf </span>|type LANG=en_GB,UTF-8 or whatever is relevent to you
+<br><br>Then uncomment (remove #) "en_GB,UTF-8" or whatever is relevent to you  
+<br><br><span class="code"> ctrl + x </span> then <span class="code"> y </span> to save and exit nano
+<br><br><span class="code"> nano /etc/locale.conf </span>|type LANG=en_GB,UTF-8 or whatever is relevent to you
 
 <br><br>J. set up hostname
 <br><span class="code"> nano /etc/hostname </span>|type a hostname then save and quit
-<br><span class="code"> nano /etc/hosts </span> type the following 3 lines in
-<br><span class="code"> 127.0.0.1 localhost </span>
-<br><span class="code"> : :1 localhost </span>
-<br><span class="code"> 127.0.1.1 {hostname}.localdomain {hostname}</span>| replace {hostname} with the hostname you set
+<br><br><span class="code"> nano /etc/hosts </span> type the following 3 lines in
+<br><br><span class="code"> 127.0.0.1 localhost </span>
+<br><br><span class="code"> : :1 localhost </span>
+<br><br><span class="code"> 127.0.1.1 {hostname}.localdomain {hostname}</span>| replace {hostname} with the hostname you set
 
 <br><br>K. set root password 
 <br><span class="code"> passwd </span>| then put in password
 
 <br><br>L. set up the bootloader  
 <br><span class="code"> grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB </span>
-<br><span class="code"> grub-mkconfig -o /boot/grub/grub.cfg </span>
+<br><br><span class="code"> grub-mkconfig -o /boot/grub/grub.cfg </span>
 
-<br> exit chroot with <span class="code">exit</span> then restart with <span class="code">reboot</span> then unplug usb before it boots again
+<br><br> exit chroot with <span class="code">exit</span> then restart with <span class="code">reboot</span> then unplug usb before it boots again
 
 <br><br>M. Add non-root user
 <br><span class="code"> useradd -m {username} </span>
-<br><span class="code"> passwd {username} </span>
-<br><span class="code"> usermod -aG wheel,audio,video,optical,storage {username} </span>
+<br><br><span class="code"> passwd {username} </span>
+<br><br><span class="code"> usermod -aG wheel,audio,video,optical,storage {username} </span>
 	
 	
 <br><br>N. give super user privileges to all the users in the wheel group
@@ -103,25 +103,25 @@
 <br><br>O. Exit root account by typing "exit" and then log in to your user.
 
 <br><br>P. Installing the DE and final setup
-<br><span class="code"> systemctl enable NetworkManager </span>| enable Network Manager
-<br><span class="code">reboot</span>
-<br><span class="code">nmtui</span>|connect to wifi again
-<br>PLASMA ONLY! <span class="code"> sudo pacman -S xorg-server plasma sddm gwenview konsole kate dolphin okular spectacle partitionmanager ark packagekit-qt5 appstream</span>
+<br><br><span class="code"> systemctl enable NetworkManager </span>| enable Network Manager
+<br><br><span class="code">reboot</span>
+<br><br><span class="code">nmtui</span>|connect to wifi again
+<br><br>PLASMA ONLY! <span class="code"> sudo pacman -S xorg-server plasma sddm gwenview konsole kate dolphin okular spectacle partitionmanager ark packagekit-qt5 appstream</span>
 <br><br>XFCE ONLY! <span class="code"> sudo pacman -S xorg-server sddm xfce4 xfce4-goodies vlc firefox noto-fonts-emoji noto-fonts gvfs-mtp android-file-transfer android-udev pulseaudio pavucontrol</span>
 
 
 <br><br>Q. Enable sdmm
 <br><span class="code"> systemctl enable sddm.service </span>
-<br><br>R. check sessions
-<br><span class="code"> loginctl show-session $XDG_SESSION_ID </span>
-<br><br>S. Reboot
-	<br><span class="code"> reboot </span>
+<br><br><br>R. check sessions
+<br><br><span class="code"> loginctl show-session $XDG_SESSION_ID </span>
+<br><br><br>S. Reboot
+	<br><br><span class="code"> reboot </span>
 <br><br>T. Install yay
 <br><span class="code"> git clone https://aur.archlinux.org/yay.git </span>
-<br><span class="code"> cd yay </span>
-<br><span class="code"> makepkg -si </span>
-<br><br>U. Sometimes Discover doesn't work, so reinstall appstream 
-<br><span class="code"> sudo pacman -S appstream </span> | if no applications are found then use <span class="code">yay -S appstream</span>
+<br><br><span class="code"> cd yay </span>
+<br><br><span class="code"> makepkg -si </span>
+<br><br><br>U. Sometimes Discover doesn't work, so reinstall appstream 
+<br><br><span class="code"> sudo pacman -S appstream </span> | if no applications are found then use <span class="code">yay -S appstream</span>
 
 <br><br><b>DONE!!!</b>  
 
