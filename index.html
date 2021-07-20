@@ -103,30 +103,31 @@
 <br><br>N. give super user privileges to all the users in the wheel group
 <br><span class="code"> EDITOR=nano visudo </span>|uncomment the linethat says <span class="code">%wheel ALL=(ALL) ALL</span> then save and quit
 
-<br>3. Exit root account by typing "exit" and then log in to your user.
 
-<br><br>R. Installing plasma:
-<br>1. enable Network Manager by:
-<br><span class="code">- systemctl enable NetworkManager</span>
-<br>2. Reboot then type "nmtui" and connect to wifi.
-<br>3. Update your system:
-<br><span class="code">- sudo pacman -Syu</span>
-<br>4. Install xorg-server, plasma and sddm by typing:
-<br><span class="code">- sudo pacman -S xorg-server plasma sddm gwenview konsole kate dolphin okular spectacle partitionmanager ark packagekit-qt5 appstream</span>
-<br><br><b>Note: there are several applications here ^ that I chose, which are: dolphin (file manager), kate (text editor), konsole (terminal), gnenview (picture viewer), okular (document viewer), spectacle (screenshot taker), paritionmanager (to manage your partitions), ark (archive extractor and other related), packagekit-qt5 and appstream needed for Discover to install applications. You can add/remove any of these, these are just applications nothing related to the system, but make sure you install konsole or a terminal! Also you can just install <a href="https://archlinux.org/groups/x86_64/kde-applications/" target="_blank">kde-applications</a> instead of the softwares I have added, kde-applications has ALL of the KDE applications (can include a lot of bloatware, but don't exclude packagekit-qt5, appstream, sddm, plasma and xorg-server!).</b>
-<br><br>5. enable sddm by typing:
-<br><span class="code">- systemctl enable sddm.service</span>
-<br>6. Test to check sessions by typing:
-<br><span class="code">- loginctl show-session $XDG_SESSION_ID</span>
-<br>7. type "reboot" to reboot.
-<br>8. Install yay by typing these separately:
-<br><span class="code">- git clone https://aur.archlinux.org/yay.git</span>
-<br><span class="code">- cd yay</span>
-<br><span class="code">- makepkg -si</span>
-<br>9. Sometimes Discover doesn't work, so reinstall appstream by: 
-<br><span class="code">- sudo pacman -S appstream</span> | if that says no applications found, do it with yay: <span class="code">yay -S appstream</span>
+<br><br>O. Exit root account by typing "exit" and then log in to your user.
 
-<br><br><b>Done!</b>  
+<br><br>P. Installing the DE and final setup
+<br><span class="code"> systemctl enable NetworkManager </span>| enable Network Manager
+<br><span class="code">reboot</span>
+<br><span class="code">nmtui</span>|connect to wifi again
+<br>PLASMA ONLY! <span class="code"> sudo pacman -S xorg-server plasma sddm gwenview konsole kate dolphin okular spectacle partitionmanager ark packagekit-qt5 appstream</span>
+<br>XFCE ONLY! <span class="code"> sudo pacman -S xorg-server sddm xfce4 xfce4-goodies vlc firefox noto-fonts-emoji noto-fonts gvfs-mtp android-file-transfer android-udev pulseaudio pavucontrol
+
+
+<br><br>Q. Enable sdmm
+<br><span class="code"> systemctl enable sddm.service </span>
+<br><br>R. check sessions
+<br><span class="code"> loginctl show-session $XDG_SESSION_ID </span>
+<br><br>S. Reboot
+	<br><span class="code"> reboot </span>
+<br>8. Install yay
+<br><span class="code"> git clone https://aur.archlinux.org/yay.git </span>
+<br><span class="code"> cd yay </span>
+<br><span class="code"> makepkg -si </span>
+<br>9. Sometimes Discover doesn't work, so reinstall appstream 
+<br><span class="code"> sudo pacman -S appstream </span> | if no applications are found then use <span class="code">yay -S appstream</span>
+
+<br><br><b>DONE!!!</b>  
 
 <br><br><b><span class="link">External links</span></b>:
 <ul>
