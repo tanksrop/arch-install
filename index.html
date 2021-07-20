@@ -49,36 +49,36 @@
 <br> click "new" when on "Free space"
 <br><span class="code"> 260M </span>| When prompted on size
 <br>- Set partition type as "EFI system" 
-<br>- Optional - create new partition type: swap - recommended 4gb for 4gb ram and under
 <br>- Create new partition using the rest of the space with type : Linux x86-64 root
 <br>- Click "write" to write the partitions to the disk and when prompted type "yes"
 <br><br>
 
-<br><br>format partitions
+<br><br>E. format partitions
+<br><span class="code"> fdisk -l </span>|
+<br><span class="code"> mkfs.ext4 {path to Linux x86-64 root partition} </span>
+<br><span class="code"> mkfs.fat -F32 /dev/{path for efi partition} </span>
+
+<br><br>F. mount partitions
+<br><span class="code"> mount {path to Linux x86-64 root partition} </span>
+<br><span class="code"> mkdir /efi </span>
+<br><span class="code"> mount {path to efi partition} /efi </span>
+  
+  
+
+<br><br>G. install necessary packages
+<br> replace intel-ucode with amd_ucode for amd systems
+<br><span class="code"> pacstrap /mnt base base-devel linux-zen linux-firmware nano intel-ucode grub efibootmgr networkmanager </span>
+
+<br><br>H. Configure the packages
+<br><span class="code"> genfstab -U /mnt >> /mnt/etc/fstab </span>
+<br><span class="code"> arch-chroot /mnt</span>
+<br><span class="code"> ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime </span>|replace Europe/London with what you put in earlier for timedatectl
+<br><span class="code"> hwclock --systohc </span>
 
 
-<br><br>F. Mount the partitions by typing (do cfdisk back to check if sda1 is EFI and if sda2 is the root partition! If it isn't rewrite it accordingly):
-<br><span class="code">- mount /dev/sda2 /mnt</span> for root partition
-<br><span class="code">- mkdir /mnt/efi</span> for creating /mnt/efi for the EFI system partition
-<br><span class="code">- mount /dev/sda1 /mnt/efi</span> for EFI partition
-
-<br><br>G. Let's install the necessary packages, please take these into consideration before installing it and read these notes:
-<br>1. "intel-ucode" may be replaced, I use intel processor possibly that's why I have written that package. Check <a href="https://wiki.archlinux.org/index.php/microcode#Installation" target="_blank">here</a> to install for your requirement, and replace the package name with "intel-ucode", you may not need any (not guaranteed).
-<br>2. "linux-zen" can be replaced with another kernel of your choice, this is the most stable for daily usage according to Arch Linux, check <a href="https://wiki.archlinux.org/index.php/Kernel" target="_blank">here</a> to choose the kernel of your choice, and replace it with "linux-zen" package.
-<br>3. "efibootmgr" is needed by "grub" for EFI systems.
-<br>4. "nano" used for text editing which we will use later on, and "networkmanager" used for connecting to wifi with typing "nmtui", but we have to enable it first then restart the pc, I have said it how later on.
-After choosing the packages that you will replace, IF you will replace, type this and replace the packages accordingly (if you have to replace some, feel free to add more but make sure you know how to use the package!):
-<br><span class="code">- pacstrap /mnt base base-devel linux-zen linux-firmware nano intel-ucode grub efibootmgr networkmanager</span>
-
-<br><br>H. Now let's configure the system after the packages from step 7 are installed:
-<br><span class="code">- genfstab -U /mnt >> /mnt/etc/fstab</span>
-<br><span class="code">- arch-chroot /mnt</span>
-<br><span class="code">- ln -sf /usr/share/zoneinfo/<i>Zone/SubZone</i> /etc/localtime</span> change this according to what you put in C!
-<br><span class="code">- hwclock --systohc</span>
-
-<br><br>I. Applying localization, type these separately:
-<br>1. run: <br><span class="code"> nano /etc/locale.gen</span>
-<br>Then uncomment "en_US.UTF-8 UTF-8" OR the language of your choice.
+<br><br>I. Apply localization 
+<br><span class="code"> nano /etc/locale.gen</span>
+<br>Then uncomment "en_US.UTF-8 UTF-8" OR the language of your choice.   
 <br>2. save the file and then run: <br><span class="code">locale-gen</span>
 <br>3. and then run: <br><span class="code">nano /etc/locale.conf</span>
 <br>4. and type in the file: LANG=en_US.UTF-8 | replace "en_US.UTF-8" with the language you uncommented before.
