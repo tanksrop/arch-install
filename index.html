@@ -24,19 +24,23 @@
 	</div>
 
 <br><br><span class="bold">B. Connect to wifi </span>
-<Br><span class="code"> iwctl  </span>
-<br><br><span class="code"> device list </span>
-<br><br><span class="code"> station {device} scan </span> | {device} = your wifi device from previous command
-<br><br><span class="code"> station {device} get-networks </span>
-<br><br><span class="code"> station {device} connect {SSID} </span>
-<br><br><span class="code"> {ctrl + c} </span> |exits iwctl tool
+	<div class="indent">
+		<Br><span class="code"> iwctl  </span>
+		<br><br><span class="code"> device list </span>
+		<br><br><span class="code"> station {device} scan </span> | {device} = your wifi device from previous command
+		<br><br><span class="code"> station {device} get-networks </span>
+		<br><br><span class="code"> station {device} connect {SSID} </span>
+		<br><br><span class="code"> {ctrl + c} </span> |exits iwctl tool
+	</div>
 
 <br><br><span class="bold">C. Update system clock </span>
-<br><span class="code"> timedatectl set-ntp true </span>
-<br><br><span class="code"> timedatectl status </span>
-<br><br><span class="code"> timedatectl list-timezones</span>| lists timezones to find yours
-<br><br><span class="code"> timedatectl set-timezone Europe/London </span>| change "Europe/London" to your timezone if aplicable
-<br><br><span class="code"> timedatectl status</span>| if it didn't work, try again
+	<div class="indent">
+		<br><span class="code"> timedatectl set-ntp true </span>
+		<br><br><span class="code"> timedatectl status </span>
+		<br><br><span class="code"> timedatectl list-timezones</span>| lists timezones to find yours
+		<br><br><span class="code"> timedatectl set-timezone Europe/London </span>| change "Europe/London" to your timezone if aplicable
+		<br><br><span class="code"> timedatectl status</span>| if it didn't work, try again
+	</div>
 
 <br><br><span class="bold">D. Make your partitions</span>
 <br><br><span class="code"> fdisk -l </span>
