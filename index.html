@@ -111,16 +111,24 @@
 
 <br><br><span class="bold">Q. Enable sdmm</span>
 <br><span class="code"> systemctl enable sddm.service </span>
+	
+	
 <br><br><br>R. check sessions
 <br><br><span class="code"> loginctl show-session $XDG_SESSION_ID </span>
+	
+	
 <br><br><br>S. Reboot
 	<br><br><span class="code"> reboot </span>
+	
+	
 <br><br>T. Install yay
 <br><span class="code"> git clone https://aur.archlinux.org/yay.git </span>
 <br><br><span class="code"> cd yay </span>
 <br><br><span class="code"> makepkg -si </span>
-<br><br><br>U. Sometimes Discover doesn't work, so reinstall appstream 
-<br><br><span class="code"> sudo pacman -S appstream </span> | if no applications are found then use <span class="code">yay -S appstream</span>
+	
+	
+<br><br><span class="bold">U. Sometimes Discover doesn't work, so reinstall appstream </span>
+	<br><br><span class="code"> sudo pacman -S appstream </span> | if no applications are found then use <span class="code">yay -S appstream</span>
 
 	<br><br><span class="mega-bold"<b>DONE!!!</b> </span>  
 
