@@ -169,9 +169,22 @@
 	
 <br><br><span class="mega-bold"<b>DONE!!!</b> </span>  
 	
-	<br><br>optional: <span class="code"> sudo pacman -Syu pamac-gtk </span> this will install pamac which is a graphical installer, comparable to an app store
+<br><br>optional: install pamac which is a graphical installer, comparable to an app store
+	<div class="indent">
+		<br><br><span class="code"> sudo pacman -S --needed base-devel git wget yajl </span>
+		<br><br><span class="code"> cd /tmp </span>
+		<br><br><span class="code"> git clone https://aur.archlinux.org/package-query.git </span>
+		<br><br><span class="code"> cd package-query/ </span>
+		<br><br><span class="code"> makepkg -si && cd /tmp/ </span>
+		<br><br><span class="code"> git clone https://aur.archlinux.org/yaourt.git</span>
+		<br><br><span class="code"> cd yaourt/</span>
+		<br><br><span class="code"> makepkg -si</span>
+		<br><br><span class="code"> yaourt -S pamac-aur</span>
+		</div>
 	
-	<br><br><br><br>personal note: i had to use the command <span class="code">modprobe wl</span> to get the wifi drivers working properly
+	
+	
+<br><br><br><br>personal note: i had to use the command <span class="code">modprobe wl</span> to get the wifi drivers working properly
 
 
 <br><br><b><span class="link">External links</span></b>:
