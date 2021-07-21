@@ -35,6 +35,10 @@ body.color {
     font-size: 20px;
 }
 
+.bold {
+    font-weight: 700;
+}
+
 a {
     color: #dcdfe0;
 }
