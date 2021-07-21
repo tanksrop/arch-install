@@ -15,8 +15,7 @@
 
 <br><u>Arch Linux (KDE/XFCE) Instructions for UEFI Systems | 64bit</u></div>
 
-<!--<br>These are simple instructions on how to install Arch Linux on <b>UEFI</b> based systems. Please keep in mind these are just instructions, anything that would happen to your machine while following these is not my responsibility, this has been of course tested on Oracle VM VirtualBox. This would cover the installation of Arch Linux with installing KDE Plasma with the softwares that are necessary (soon i3 with the softwares of my choice and the admin), if you want to install all KDE applications as well I have included it in a notice. And give the External Links a look that are at the end of this page to view other places as well!
--->
+
 <br><br>Before continuing, visit <a href="https://archlinux.org/download/" target="_blank">this link</a> to install the ISO from a server, it's usually named like "archlinux-2021.03.01-x86_64.iso". Then prepare an installation medium by checking <a href="https://wiki.archlinux.org/index.php/Installation_guide#Prepare_an_installation_medium" target="_blank">here</a>. After doing that boot the live environment by checking <a href="https://wiki.archlinux.org/index.php/Installation_guide#Boot_the_live_environment target="_blank">here</a>. And then, when you do these above 3 things, and when you're in the live environment, feel free to continue checking the steps:
 
 
@@ -41,17 +40,17 @@
 <br><br>D. Make your partitions
 <br><br><span class="code"> fdisk -l </span>
 <br><br><span class="code"> cfdisk {drive}</span>|where {drive} is the path to the drive you are installing on
-<br><br> Delete all partitions
+<br><br> Delete all partitions, be careful here not to wipe your live usb
 <br><br> click "new" when on "Free space"
 <br><br><span class="code"> 260M </span>| When prompted on size
 <br><br>- Set partition type as "EFI system" 
 <br><br>- Create new partition using the rest of the space with type : Linux x86-64 root
-<br><br>- Click "write" to write the partitions to the disk and when prompted type "yes"
+<br><br>- Click "write" to write the partitions to the disk and when prompted type "yes", do this for both partitions
 
 <br><br>E. format partitions
 <br><span class="code"> fdisk -l </span>|
 <br><br><span class="code"> mkfs.ext4 {path to Linux x86-64 root partition} </span>
-<br><br><span class="code"> mkfs.fat -F32 /dev/{path for efi partition} </span>
+<br><br><span class="code"> mkfs.fat -F32 {path for efi partition} </span>
 
 <br><br>F. mount partitions
 <br><span class="code"> mount {path to Linux x86-64 root partition} /mnt</span>
@@ -72,7 +71,8 @@
 <br><span class="code"> nano /etc/locale.gen</span>
 <br><br>Then uncomment (remove #) "en_GB,UTF-8" or whatever is relevent to you  
 <br><br><span class="code"> ctrl + x </span> then <span class="code"> y </span> to save and exit nano
-<br><br><span class="code"> nano /etc/locale.conf </span>|type LANG=en_GB,UTF-8 or whatever is relevent to you
+<br><br>>span class="code"> locale-gen </span>
+<br><br><span class="code"> nano /etc/locale.conf </span>|type in "LANG=en_GB,UTF-8" or whatever is relevent to you
 
 <br><br>J. set up hostname
 <br><span class="code"> nano /etc/hostname </span>|type a hostname then save and quit
@@ -91,7 +91,7 @@
 <br><br> exit chroot with <span class="code">exit</span> then restart with <span class="code">reboot</span> then unplug usb before it boots again
 
 <br><br>M. Add non-root user
-<br><span class="code"> useradd -m {username} </span>
+<br><span class="code"> useradd -m {username} </span>| where {username} is your chosen username
 <br><br><span class="code"> passwd {username} </span>
 <br><br><span class="code"> usermod -aG wheel,audio,video,optical,storage {username} </span>
 	
