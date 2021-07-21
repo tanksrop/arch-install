@@ -58,3 +58,7 @@ a {
 .mega-bold {
     font-weight: 900;
 }
+
+.indent {
+    margin-left: 40px;
+}
