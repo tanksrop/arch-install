@@ -43,100 +43,130 @@
 	</div>
 
 <br><br><span class="bold">D. Make your partitions</span>
-<br><br><span class="code"> fdisk -l </span>
-<br><br><span class="code"> cfdisk {drive}</span>|where {drive} is the path to the drive you are installing on
-<br><br> Delete all partitions, be careful here not to wipe your live usb
-<br><br> click "new" when on "Free space"
-<br><br><span class="code"> 260M </span>| When prompted on size
-<br><br>- Set partition type as "EFI system" 
-<br><br>- Create new partition using the rest of the space with type : Linux x86-64 root
-<br><br>- Click "write" to write the partitions to the disk and when prompted type "yes", do this for both partitions
+	<div class="indent">
+		<br><br><span class="code"> fdisk -l </span>
+		<br><br><span class="code"> cfdisk {drive}</span>|where {drive} is the path to the drive you are installing on
+		<br><br> Delete all partitions, be careful here not to wipe your live usb
+		<br><br> click "new" when on "Free space"
+		<br><br><span class="code"> 260M </span>| When prompted on size
+		<br><br>- Set partition type as "EFI system" 
+		<br><br>- Create new partition using the rest of the space with type : Linux x86-64 root
+		<br><br>- Click "write" to write the partitions to the disk and when prompted type "yes", do this for both partitions
+	</div>
 
 <br><br><span class="bold">E. format partitions</span>
-<br><span class="code"> fdisk -l </span>|
-<br><br><span class="code"> mkfs.ext4 {path to Linux x86-64 root partition} </span>
-<br><br><span class="code"> mkfs.fat -F32 {path for efi partition} </span>
+	<div class="indent">
+		<br><span class="code"> fdisk -l </span>|
+		<br><br><span class="code"> mkfs.ext4 {path to Linux x86-64 root partition} </span>
+		<br><br><span class="code"> mkfs.fat -F32 {path for efi partition} </span>
+	</div>
 
 <br><br><span class="bold">F. mount partitions</span>
-<br><span class="code"> mount {path to Linux x86-64 root partition} /mnt</span>
-<br><br><span class="code"> mkdir /efi </span>
-<br><br><span class="code"> mount {path to efi partition} /efi </span>
+	<div class="indent">
+		<br><span class="code"> mount {path to Linux x86-64 root partition} /mnt</span>
+		<br><br><span class="code"> mkdir /efi </span>
+		<br><br><span class="code"> mount {path to efi partition} /efi </span>
+	</div>
 
 <br><br><span class="bold">G. install necessary packages</span>
-<br> replace intel-ucode with amd_ucode for amd systems
-<br><br><span class="code"> pacstrap /mnt base base-devel linux-zen linux-firmware nano intel-ucode grub efibootmgr networkmanager </span>
+	<div class="indent">
+		<br> replace intel-ucode with amd_ucode for amd systems
+		<br><br><span class="code"> pacstrap /mnt base base-devel linux-zen linux-firmware nano intel-ucode grub efibootmgr networkmanager </span>
+	</div>
 
 <br><br><span class="bold">H. Configure the packages</span>
-<br><br><span class="code"> genfstab -U /mnt >> /mnt/etc/fstab </span>
-<br><br><span class="code"> arch-chroot /mnt</span>
-<br><br><span class="code"> ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime </span>|replace Europe/London with what you put in earlier for timedatectl
-<br><br><span class="code"> hwclock --systohc </span>
+	<div class="indent">
+		<br><br><span class="code"> genfstab -U /mnt >> /mnt/etc/fstab </span>
+		<br><br><span class="code"> arch-chroot /mnt</span>
+		<br><br><span class="code"> ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime </span>|replace Europe/London with what you put in earlier for timedatectl
+		<br><br><span class="code"> hwclock --systohc </span>
+	</div>
 
 <br><br><span class="bold">I. Apply localization </span>
-<br><span class="code"> nano /etc/locale.gen</span>
-<br><br>Then uncomment (remove #) "en_GB,UTF-8" or whatever is relevent to you  
-<br><br><span class="code"> ctrl + x </span> then <span class="code"> y </span> to save and exit nano
-<br><br>>span class="code"> locale-gen </span>
-<br><br><span class="code"> nano /etc/locale.conf </span>|type in "LANG=en_GB,UTF-8" or whatever is relevent to you
+	<div class="indent">
+		<br><span class="code"> nano /etc/locale.gen</span>
+		<br><br>Then uncomment (remove #) "en_GB,UTF-8" or whatever is relevent to you  
+		<br><br><span class="code"> ctrl + x </span> then <span class="code"> y </span> to save and exit nano
+		<br><br>>span class="code"> locale-gen </span>
+		<br><br><span class="code"> nano /etc/locale.conf </span>|type in "LANG=en_GB,UTF-8" or whatever is relevent to you
+	</div>
 
 <br><br><span class="bold">J. set up hostname</span>
-<br><span class="code"> nano /etc/hostname </span>|type a hostname then save and quit
-<br><br><span class="code"> nano /etc/hosts </span> type the following 3 lines in
-<br><br><span class="code"> 127.0.0.1 localhost </span>
-<br><br><span class="code"> : :1 localhost </span>
-<br><br><span class="code"> 127.0.1.1 {hostname}.localdomain {hostname}</span>| replace {hostname} with the hostname you set
+	<div class="indent">
+		<br><span class="code"> nano /etc/hostname </span>|type a hostname then save and quit
+		<br><br><span class="code"> nano /etc/hosts </span> type the following 3 lines in
+		<br><br><span class="code"> 127.0.0.1 localhost </span>
+		<br><br><span class="code"> : :1 localhost </span>
+		<br><br><span class="code"> 127.0.1.1 {hostname}.localdomain {hostname}</span>| replace {hostname} with the hostname you set
+	</div>
 
 <br><br><span class="bold">K. set root password </span>
-<br><span class="code"> passwd </span>| then put in password
+	<div class="indent">
+		<br><span class="code"> passwd </span>| then put in password
+	</div>
 
 <br><br><span class="bold">L. set up the bootloader </span>
-<br><span class="code"> grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB </span>
-<br><br><span class="code"> grub-mkconfig -o /boot/grub/grub.cfg </span>
+	<div class="indent">
+		<br><span class="code"> grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB </span>
+		<br><br><span class="code"> grub-mkconfig -o /boot/grub/grub.cfg </span>
+	</div>
 
-<br><br><span class="bold"> exit chroot with <span class="code">exit</span> then restart with <span class="code">reboot</span> then unplug usb before it boots again</span>
+<br><br><span class="bold">M.  exit chroot with <span class="code">exit</span> then restart with <span class="code">reboot</span> then unplug usb before it boots again</span>
 
-<br><br><span class="bold">M. Add non-root user</span>
-<br><span class="code"> useradd -m {username} </span>| where {username} is your chosen username
-<br><br><span class="code"> passwd {username} </span>
-<br><br><span class="code"> usermod -aG wheel,audio,video,optical,storage {username} </span>
+<br><br><span class="bold">N.  Add non-root user</span>
+	<div class="indent">
+		<br><span class="code"> useradd -m {username} </span>| where {username} is your chosen username
+		<br><br><span class="code"> passwd {username} </span>
+		<br><br><span class="code"> usermod -aG wheel,audio,video,optical,storage {username} </span>
+	</div>
 	
 	
-<br><br><span class="bold">N. give super user privileges to all the users in the wheel group</span>
-<br><span class="code"> EDITOR=nano visudo </span>|uncomment the linethat says <span class="code">%wheel ALL=(ALL) ALL</span> then save and quit
+<br><br><span class="bold">O.  give super user privileges to all the users in the wheel group</span>
+	<div class="indent">
+		<br><span class="code"> EDITOR=nano visudo </span>|uncomment the linethat says <span class="code">%wheel ALL=(ALL) ALL</span> then save and quit
+	</div>
 
+<br><br><span class="bold">P.  Exit root account by typing "exit" and then log in to your user.</span>
 
-<br><br><span class="bold">O. Exit root account by typing "exit" and then log in to your user.</span>
+<br><br><span class="bold">Q.  Installing the DE and final setup</span>
+	<div class="indent">
+		<br><br><span class="code"> systemctl enable NetworkManager </span>| enable Network Manager
+		<br><br><span class="code">reboot</span>
+		<br><br><span class="code">nmtui</span>|connect to wifi again
+		<br><br>PLASMA ONLY! <span class="code"> sudo pacman -S xorg-server plasma sddm gwenview konsole kate dolphin okular spectacle partitionmanager ark packagekit-qt5 appstream</span>
+		<br><br>XFCE ONLY! <span class="code"> sudo pacman -S xorg-server sddm xfce4 xfce4-goodies vlc firefox noto-fonts-emoji noto-fonts gvfs-mtp android-file-transfer android-udev pulseaudio pavucontrol</span>
+	</div>
 
-<br><br><span class="bold">P. Installing the DE and final setup</span>
-<br><br><span class="code"> systemctl enable NetworkManager </span>| enable Network Manager
-<br><br><span class="code">reboot</span>
-<br><br><span class="code">nmtui</span>|connect to wifi again
-<br><br>PLASMA ONLY! <span class="code"> sudo pacman -S xorg-server plasma sddm gwenview konsole kate dolphin okular spectacle partitionmanager ark packagekit-qt5 appstream</span>
-<br><br>XFCE ONLY! <span class="code"> sudo pacman -S xorg-server sddm xfce4 xfce4-goodies vlc firefox noto-fonts-emoji noto-fonts gvfs-mtp android-file-transfer android-udev pulseaudio pavucontrol</span>
-
-
-<br><br><span class="bold">Q. Enable sdmm</span>
-<br><span class="code"> systemctl enable sddm.service </span>
+<br><br><span class="bold">R.  Enable sdmm</span>
+	<div class="indent">
+		<br><span class="code"> systemctl enable sddm.service </span>
+	</div>
+	
+<br><br><br>S.  check sessions
+	<div class="indent">
+		<br><br><span class="code"> loginctl show-session $XDG_SESSION_ID </span>
+	</div>
 	
 	
-<br><br><br>R. check sessions
-<br><br><span class="code"> loginctl show-session $XDG_SESSION_ID </span>
+<br><br><br>T.  Reboot
+	<div class="indent">
+		<br><br><span class="code"> reboot </span>
+	</div
+	
+<br><br>U.  Install yay
+	<div class="indent">
+		<br><span class="code"> git clone https://aur.archlinux.org/yay.git </span>
+		<br><br><span class="code"> cd yay </span>
+		<br><br><span class="code"> makepkg -si </span>
+	</div>
 	
 	
-<br><br><br>S. Reboot
-	<br><br><span class="code"> reboot </span>
+<br><br><span class="bold">V.  Sometimes Discover doesn't work, so reinstall appstream </span>
+	<div class="indent">
+		<br><br><span class="code"> sudo pacman -S appstream </span> | if no applications are found then use <span class="code">yay -S appstream</span>
+	</div>
 	
-	
-<br><br>T. Install yay
-<br><span class="code"> git clone https://aur.archlinux.org/yay.git </span>
-<br><br><span class="code"> cd yay </span>
-<br><br><span class="code"> makepkg -si </span>
-	
-	
-<br><br><span class="bold">U. Sometimes Discover doesn't work, so reinstall appstream </span>
-	<br><br><span class="code"> sudo pacman -S appstream </span> | if no applications are found then use <span class="code">yay -S appstream</span>
-
-	<br><br><span class="mega-bold"<b>DONE!!!</b> </span>  
+<br><br><span class="mega-bold"<b>DONE!!!</b> </span>  
 
 <br><br><b><span class="link">External links</span></b>:
 <ul>
