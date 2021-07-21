@@ -44,7 +44,7 @@
 
 <br><br><span class="bold">D. Make your partitions</span>
 	<div class="indent">
-		<br><br><span class="code"> fdisk -l </span>
+		<br><span class="code"> fdisk -l </span>
 		<br><br><span class="code"> cfdisk {drive}</span>|where {drive} is the path to the drive you are installing on
 		<br><br> Delete all partitions, be careful here not to wipe your live usb
 		<br><br> click "new" when on "Free space"
@@ -76,7 +76,7 @@
 
 <br><br><span class="bold">H. Configure the packages</span>
 	<div class="indent">
-		<br><br><span class="code"> genfstab -U /mnt >> /mnt/etc/fstab </span>
+		<br><span class="code"> genfstab -U /mnt >> /mnt/etc/fstab </span>
 		<br><br><span class="code"> arch-chroot /mnt</span>
 		<br><br><span class="code"> ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime </span>|replace Europe/London with what you put in earlier for timedatectl
 		<br><br><span class="code"> hwclock --systohc </span>
@@ -130,7 +130,7 @@
 
 <br><br><span class="bold">Q.  Installing the DE and final setup</span>
 	<div class="indent">
-		<br><br><span class="code"> systemctl enable NetworkManager </span>| enable Network Manager
+		<br><span class="code"> systemctl enable NetworkManager </span>| enable Network Manager
 		<br><br><span class="code">reboot</span>
 		<br><br><span class="code">nmtui</span>|connect to wifi again
 		<br><br>PLASMA ONLY! <span class="code"> sudo pacman -S xorg-server plasma sddm gwenview konsole kate dolphin okular spectacle partitionmanager ark packagekit-qt5 appstream</span>
@@ -144,13 +144,13 @@
 	
 <br><br><span class="bold">S.  check sessions </span>
 	<div class="indent">
-		<br><br><span class="code"> loginctl show-session $XDG_SESSION_ID </span>
+		<br><span class="code"> loginctl show-session $XDG_SESSION_ID </span>
 	</div>
 	
 	
 <br><br><span class="bold">T.  Reboot </span>
 	<div class="indent">
-		<br><br><span class="code"> reboot </span>
+		<br><span class="code"> reboot </span>
 	</div
 	
 <br><br><span class="bold">U.  Install yay </span>
@@ -163,7 +163,7 @@
 	
 <br><br><span class="bold">V.  Sometimes Discover doesn't work, so reinstall appstream </span>
 	<div class="indent">
-		<br><br><span class="code"> sudo pacman -S appstream </span> | if no applications are found then use <span class="code">yay -S appstream</span>
+		<br><span class="code"> sudo pacman -S appstream </span> | if no applications are found then use <span class="code">yay -S appstream</span>
 	</div>
 	
 <br><br><span class="mega-bold"<b>DONE!!!</b> </span>  
