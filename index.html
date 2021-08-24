@@ -70,9 +70,11 @@
 
 <br><br><span class="bold">G. install necessary packages</span>
 	<div class="indent">
-		<br> replace intel-ucode with amd_ucode for amd systems
-		<br><br><span class="code"> pacstrap /mnt base base-devel linux-zen linux-zen-headers linux-firmware nano intel-ucode efibootmgr networkmanager</span>
-		<br><br>optional: if you wish to use grub instead of systemd-boot, add <span class="code">grub</span> to the end of the last comamand
+		
+		<br><span class="code"> pacstrap /mnt base base-devel linux-zen linux-zen-headers linux-firmware nano intel-ucode efibootmgr networkmanager systemd-boot-pacman-hook</span>
+		<br><br>optional: if you wish to use grub instead of systemd-boot, add <span class="code">grub</span> instead of <span class="code">systemd-boot-pacman-hook</span> to the end of the last command
+		<br><br> For systems using an intel cpu, add the following to the end of the install command <span class="code">intel-ucode</span> 
+		<br><br>For amd, use <span class="code">amd-ucode</span>
 	</div>
 
 <br><br><span class="bold">H. Configure the packages</span>
@@ -108,11 +110,14 @@
 
 <br><br><span class="bold">L. set up the bootloader </span>
 	<div class="indent">
-		<br><span class="code"> grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB </span>
+		<br>If using systemd-boot:
+		<br><br><span class="code">bootctl install</span>
+		<br><br>If using grub:
+		<br><br><span class="code"> grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB </span>
 		<br><br><span class="code"> grub-mkconfig -o /boot/grub/grub.cfg </span>
 	</div>
 
-<br><br><span class="bold">M.  exit chroot with <span class="code">exit</span> then restart with <span class="code">reboot</span> then unplug usb before it boots again</span>
+<br><br><span class="bold">M.  exit chroot with </span><span class="code">exit</span><span class="bold"> then restart with </span><span class="code">reboot</span><span class="code"> then unplug usb before it boots again</span>
 <br> log in as "root" with the password you set up earlier
 
 <br><br><span class="bold">N.  Add non-root user</span>
