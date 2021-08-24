@@ -71,8 +71,8 @@
 <br><br><span class="bold">G. install necessary packages</span>
 	<div class="indent">
 		
-		<br><span class="code"> pacstrap /mnt base base-devel linux-zen linux-zen-headers linux-firmware nano intel-ucode efibootmgr networkmanager systemd-boot-pacman-hook</span>
-		<br><br>optional: if you wish to use grub instead of systemd-boot, add <span class="code">grub</span> instead of <span class="code">systemd-boot-pacman-hook</span> to the end of the last command
+		<br><span class="code"> pacstrap /mnt base base-devel linux-zen linux-zen-headers linux-firmware nano intel-ucode efibootmgr networkmanager </span>
+		<br><br>optional: if you wish to use grub instead of systemd-boot, add <span class="code">grub</span> to the end of the last command
 		<br><br> For systems using an intel cpu, add the following to the end of the install command <span class="code">intel-ucode</span> 
 		<br><br>For amd, use <span class="code">amd-ucode</span>
 	</div>
@@ -165,6 +165,8 @@
 		<br><span class="code"> git clone https://aur.archlinux.org/yay.git </span>
 		<br><br><span class="code"> cd yay </span>
 		<br><br><span class="code"> makepkg -si </span>
+		<br><br><span class="bold">IMPORTANT, if you installed systemd-boot run the following command:</span>
+		<br><br><span class="code">yay -S --answerdiff=None systemd-boot-pacman-hook
 	</div>
 	
 	
