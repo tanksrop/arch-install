@@ -71,7 +71,8 @@
 <br><br><span class="bold">G. install necessary packages</span>
 	<div class="indent">
 		<br> replace intel-ucode with amd_ucode for amd systems
-		<br><br><span class="code"> pacstrap /mnt base base-devel linux-zen linux-zen-headers linux-firmware nano intel-ucode grub efibootmgr networkmanager </span>
+		<br><br><span class="code"> pacstrap /mnt base base-devel linux-zen linux-zen-headers linux-firmware nano intel-ucode efibootmgr networkmanager</span>
+		<br><br>optional: if you wish to use grub instead of systemd-boot, add <span class="code">grub</span> to the end of the last comamand
 	</div>
 
 <br><br><span class="bold">H. Configure the packages</span>
